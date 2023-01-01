@@ -1,0 +1,28 @@
+    # control assembly based on control parameters
+    if alpha_activity > 0.5 and beta_activity > 0.5:
+      assembly.move_forward()
+      play_sound('forward.wav')
+    elif alpha_activity > 0.5 and beta_activity < -0.5:
+      assembly.move_backward()
+      play_sound('backward.wav')
+    elif alpha_activity < -0.5 and beta_activity > 0.5:
+      assembly.move_up()
+      play_sound('up.wav')
+    elif alpha_activity < -0.5 and beta_activity < -0.5:
+      assembly.move_down()
+      play_sound('down.wav')
+    elif gamma_activity > 0.5 and delta_activity > 0.5:
+      assembly.move_left()
+      play_sound('left.wav')
+    elif gamma_activity > 0.5 and delta_activity < -0.5:
+      assembly.move_right()
+      play_sound('right.wav')
+    elif theta_activity > 0.5 and mu_activity > 0.5:
+      assembly.rotate_clockwise()
+      play_sound('clockwise.wav')
+    elif theta_activity > 0.5 and mu_activity < -0.5:
+      assembly.rotate_counterclockwise()
+      play_sound('counterclockwise.wav')
+    else:
+      assembly.stay_still()
+      play_sound('neutral.wav')
