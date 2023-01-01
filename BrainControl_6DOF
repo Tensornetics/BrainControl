@@ -1,0 +1,42 @@
+import brainflow
+from brainflow import BoardShim
+from brainflow.data_filter import DataFilter, FilterTypes, AggOperations
+from brainflow.board_shim import BrainFlowInputParams, BoardIds
+
+def run_bci():
+  # initialize board
+  board_id = BoardIds.SYNTHETIC_BOARD.value
+  board = BoardShim(board_id, BrainFlowInputParams())
+  try:
+    board.prepare_session()
+    board.start_stream()
+  except Exception as e:
+    print('Error preparing or starting stream:', e)
+    return
+
+  # create data filter to average EEG data over 1 second windows
+  filter = DataFilter(board.get_sampling_rate(), 1)
+  filter.add_filter(FilterTypes.MEAN, AggOperations.MEAN, [0, 1, 2, 3, 4, 5])
+
+  # initialize robotic assembly
+  assembly = RoboticAssembly(6)
+
+  # main loop
+  while True:
+    # get data from board
+    try:
+      data = board.get_current_board_data(128)
+    except Exception as e:
+      print('Error getting data from board:', e)
+      continue
+    # filter and average data
+    filtered_data = filter.filter_data(data)
+  
+    # control assembly based on alpha, beta, gamma, delta, theta, and mu activity
+    alpha_activity = filtered_data[:, 8:12]
+    beta_activity = filtered_data[:, 12:30]
+    gamma_activity = filtered_data[:, 30:50]
+    delta_activity = filtered_data[:, 0:4]
+    theta_activity = filtered_data[:, 4:8]
+    mu_activity = filtered_data[:, 70:100]
+    assembly.move(alpha_activity, beta_activity, gamma_activity, delta_activity, theta_activity, mu_activity)
