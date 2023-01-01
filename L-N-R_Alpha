@@ -1,0 +1,10 @@
+    # control assembly based on alpha activity
+    if alpha_activity > 0.5:
+      assembly.move_left()
+      play_sound('left.wav')
+    elif alpha_activity < -0.5:
+      assembly.move_right()
+      play_sound('right.wav')
+    else:
+      assembly.stay_still()
+      play_sound('neutral.wav')
