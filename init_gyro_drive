@@ -1,0 +1,19 @@
+def initialize_thrusters_and_gyro():
+    print("Initializing thrusters and gyro...")
+    
+    # Initialize thrusters
+    initialize_thrusters()
+    
+    # Initialize gyro
+    initialize_gyro()
+    
+def initialize_thrusters():
+    print("Initializing thrusters...")
+    # Code to initialize thrusters goes here
+    
+def initialize_gyro():
+    print("Initializing gyro...")
+    # Code to initialize gyro goes here
+
+if __name__ == "__main__":
+    initialize_thrusters_and_gyro()
